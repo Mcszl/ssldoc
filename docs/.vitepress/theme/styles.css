@@ -8,15 +8,21 @@
   --vp-home-hero-name-color: transparent;
   --vp-home-hero-name-background: -webkit-linear-gradient(
     120deg,
-    #bd34fe 30%,
-    #41d1ff
+    #16a34a 20%,
+    #0ea5e9 56%,
+    #2563eb
   );
   --vp-home-hero-image-background-image: linear-gradient(
     -45deg,
-    #bd34fe 50%,
-    #47caff 50%
+    #22c55e 36%,
+    #0ea5e9 50%,
+    #2563eb 72%
   );
   --vp-home-hero-image-filter: blur(44px);
+  --vp-c-brand-1: #2563eb;
+  --vp-c-brand-2: #0ea5e9;
+  --vp-c-brand-3: #38bdf8;
+  --vp-c-brand-soft: rgba(14, 165, 233, 0.14);
 }
 
 @media (min-width: 640px) {
@@ -32,8 +38,9 @@
 }
 
 .VPHero .VPImage {
-  filter: drop-shadow(-2px 4px 6px rgba(0, 0, 0, 0.2));
-  padding: 18px;
+  filter: drop-shadow(0 18px 28px rgba(14, 116, 144, 0.22));
+  max-width: 280px;
+  padding: 12px;
 }
 
 /* used in reference/default-theme-search */

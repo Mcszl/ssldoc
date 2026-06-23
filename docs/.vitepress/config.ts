@@ -5,15 +5,15 @@ import {
 } from 'vitepress'
 import {
   groupIconMdPlugin,
-  groupIconVitePlugin,
-  localIconLoader
+  groupIconVitePlugin
 } from 'vitepress-plugin-group-icons'
 import llmstxt from 'vitepress-plugin-llms'
 
 const prod = !!process.env.NETLIFY
-const siteUrl = 'https://vitepress.dev'
+const siteUrl = 'https://shop.ywxmz.com'
+const logoUrl = 'https://cos-ssldoc.ywxmz.com/spaceFiles/1/nS3DUXtiobRsMPxGnTNDzt.png'
 
-const ogImage = new URL('/vitepress-og.jpg', siteUrl).href
+const ogImage = logoUrl
 
 const localeToOgLocaleMap: Record<string, string> = {
   root: 'en_US',
@@ -27,7 +27,8 @@ const localeToOgLocaleMap: Record<string, string> = {
 }
 
 export default defineConfig({
-  title: 'VitePress',
+  title: 'EveryoneTrust SSL 文档',
+  description: 'EveryoneTrust SSL/TLS 证书购买、验证、部署、续期和自动化运维文档。',
 
   rewrites: {
     'en/:rest*': ':rest*'
@@ -51,7 +52,7 @@ export default defineConfig({
       }
     ],
     config(md) {
-      // TODO: remove when https://github.com/vuejs/vitepress/issues/4431 is fixed
+      // Keep the copy-button title localized while the renderer output stays static.
       const fence = md.renderer.rules.fence!
       md.renderer.rules.fence = function (tokens, idx, options, env, self) {
         const { localeIndex = 'root' } = env
@@ -93,33 +94,16 @@ export default defineConfig({
 
   // prettier-ignore
   head: [
-    ['link', { rel: 'icon', type: 'image/svg+xml', href: '/vitepress-logo-mini.svg' }],
-    ['link', { rel: 'icon', type: 'image/png', href: '/vitepress-logo-mini.png' }],
-    ['meta', { name: 'theme-color', content: '#5f67ee' }],
-    ['script', { src: 'https://cdn.usefathom.com/script.js', 'data-site': 'AZBRSFGG', 'data-spa': 'auto', defer: '' }]
+    ['link', { rel: 'icon', type: 'image/png', href: logoUrl }],
+    ['meta', { name: 'theme-color', content: '#2563eb' }]
   ],
 
   themeConfig: {
-    logo: { src: '/vitepress-logo-mini.svg', width: 24, height: 24 },
-
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ],
+    logo: { src: logoUrl, width: 24, height: 24, alt: 'EveryoneTrust SSL' },
 
     search: {
-      provider: 'algolia',
-      options: {
-        appId: '8J64VVRP8K',
-        apiKey: '52f578a92b88ad6abde815aae2b0ad7c',
-        indexName: 'vitepress',
-        askAi: {
-          assistantId: 'YaVSonfX5bS8',
-          sidePanel: true
-        }
-      }
-    },
-
-    carbonAds: { code: 'CEBDT27Y', placement: 'vuejsorg' }
+      provider: 'local'
+    }
   },
 
   locales: {
@@ -135,15 +119,7 @@ export default defineConfig({
 
   vite: {
     plugins: [
-      groupIconVitePlugin({
-        customIcon: {
-          vitepress: localIconLoader(
-            import.meta.url,
-            '../public/vitepress-logo-mini.svg'
-          ),
-          firebase: 'logos:firebase'
-        }
-      }),
+      groupIconVitePlugin(),
       prod && llmstxt({ workDir: 'en', ignoreFiles: ['index.md'] })
     ],
     experimental: {
@@ -155,7 +131,7 @@ export default defineConfig({
   transformPageData: prod ? (pageData, ctx) => {
     const url = new URL(pageData.relativePath.replace(/(?:(^|\/)index)?\.md$/, '$1'), siteUrl).href
     const site = resolveSiteDataByRoute(ctx.siteConfig.site, pageData.relativePath)
-    const title = pageData.title ? `${pageData.title} | VitePress` : site.title
+    const title = pageData.title ? `${pageData.title} | EveryoneTrust SSL` : site.title
     const description = pageData.description || site.description
     const locale = localeToOgLocaleMap[site.localeIndex || 'root']
 
@@ -165,13 +141,11 @@ export default defineConfig({
       ['meta', { property: 'og:description', content: description }],
       ['meta', { property: 'og:type', content: 'website' }],
       ['meta', { property: 'og:locale', content: locale }],
-      ['meta', { property: 'og:site_name', content: 'VitePress' }],
+      ['meta', { property: 'og:site_name', content: 'EveryoneTrust SSL 文档' }],
       ['meta', { property: 'og:image', content: ogImage }],
       ['meta', { property: 'og:image:secure_url', content: ogImage }],
-      ['meta', { property: 'og:image:type', content: 'image/jpeg' }],
-      ['meta', { property: 'og:image:width', content: '1280' }],
-      ['meta', { property: 'og:image:height', content: '640' }],
-      ['meta', { property: 'og:image:alt', content: 'VitePress' }],
+      ['meta', { property: 'og:image:type', content: 'image/png' }],
+      ['meta', { property: 'og:image:alt', content: 'EveryoneTrust SSL 文档' }],
       ['link', { rel: 'canonical', href: url }]
     )
   } : undefined

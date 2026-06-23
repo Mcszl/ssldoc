@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title desc">
+  <title id="title">EveryoneTrust SSL</title>
+  <desc id="desc">Shield and lock logo for EveryoneTrust SSL documentation.</desc>
+  <defs>
+    <linearGradient id="shield" x1="48" x2="196" y1="24" y2="212" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22c55e"/>
+      <stop offset=".52" stop-color="#0ea5e9"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="78" x2="168" y1="52" y2="158" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff" stop-opacity=".86"/>
+      <stop offset="1" stop-color="#fff" stop-opacity=".12"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#shield)" d="M120 18 42 50v58c0 50 31 94 78 114 47-20 78-64 78-114V50L120 18Z"/>
+  <path fill="url(#shine)" d="M120 36 62 60v45c0 37 21 70 58 88 37-18 58-51 58-88V60l-58-24Z"/>
+  <path fill="#fff" d="M88 105h64c7 0 12 5 12 12v44c0 7-5 12-12 12H88c-7 0-12-5-12-12v-44c0-7 5-12 12-12Zm16 0V87c0-22 13-36 36-36s36 14 36 36v18h-18V88c0-13-6-20-18-20s-18 7-18 20v17h-18Zm16 31c-5 0-9 4-9 9 0 4 2 7 5 8v9h8v-9c3-1 5-4 5-8 0-5-4-9-9-9Z"/>
+</svg>
