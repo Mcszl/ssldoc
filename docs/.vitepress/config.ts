@@ -16,14 +16,8 @@ const logoUrl = 'https://cos-ssldoc.ywxmz.com/spaceFiles/1/nS3DUXtiobRsMPxGnTNDz
 const ogImage = logoUrl
 
 const localeToOgLocaleMap: Record<string, string> = {
-  root: 'en_US',
-  zh: 'zh_CN',
-  pt: 'pt_BR',
-  ru: 'ru_RU',
-  es: 'es_ES',
-  ko: 'ko_KR',
-  fa: 'fa_IR',
-  ja: 'ja_JP'
+  root: 'zh_CN',
+  en: 'en_US'
 }
 
 export default defineConfig({
@@ -31,7 +25,7 @@ export default defineConfig({
   description: 'EveryoneTrust SSL/TLS 证书购买、验证、部署、续期和自动化运维文档。',
 
   rewrites: {
-    'en/:rest*': ':rest*'
+    'zh/:rest*': ':rest*'
   },
 
   lastUpdated: true,
@@ -58,20 +52,9 @@ export default defineConfig({
         const { localeIndex = 'root' } = env
         const codeCopyButtonTitle = (() => {
           switch (localeIndex) {
-            case 'es':
-              return 'Copiar código'
-            case 'fa':
-              return 'کپی کد'
-            case 'ko':
-              return '코드 복사'
-            case 'pt':
-              return 'Copiar código'
-            case 'ru':
-              return 'Скопировать код'
             case 'zh':
+            case 'root':
               return '复制代码'
-            case 'ja':
-              return 'コードをコピー'
             default:
               return 'Copy code'
           }
@@ -107,20 +90,14 @@ export default defineConfig({
   },
 
   locales: {
-    root: { label: 'English', lang: 'en-US', dir: 'ltr' },
-    zh: { label: '简体中文', lang: 'zh-Hans', dir: 'ltr' },
-    pt: { label: 'Português', lang: 'pt-BR', dir: 'ltr' },
-    ru: { label: 'Русский', lang: 'ru-RU', dir: 'ltr' },
-    es: { label: 'Español', lang: 'es', dir: 'ltr' },
-    ko: { label: '한국어', lang: 'ko-KR', dir: 'ltr' },
-    fa: { label: 'فارسی', lang: 'fa-IR', dir: 'rtl' },
-    ja: { label: '日本語', lang: 'ja', dir: 'ltr' }
+    root: { label: '简体中文', lang: 'zh-Hans', dir: 'ltr' },
+    en: { label: 'English', lang: 'en-US', dir: 'ltr' }
   },
 
   vite: {
     plugins: [
       groupIconVitePlugin(),
-      prod && llmstxt({ workDir: 'en', ignoreFiles: ['index.md'] })
+      prod && llmstxt({ workDir: 'zh', ignoreFiles: ['index.md'] })
     ],
     experimental: {
       enableNativePlugin: true
