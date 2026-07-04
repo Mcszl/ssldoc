@@ -20,19 +20,14 @@
 | `verification_type` | string | 否 | 验证类型，支持传验证代码或名称，如 `dv`、`ov`、`ev`、`域名验证`。 |
 | `product_name` | string | 否 | 产品名称，支持模糊查询。 |
 | `product_code` | string | 否 | 产品代码，精确匹配。 |
-| `page` | integer | 否 | 页码，默认 `1`。 |
-| `limit` | integer | 否 | 每页数量，默认 `100`，最大 `500`。 |
+| `page` | integer | 否 | 页码，默认 `1`。仅在传入 `limit` 时用于分页。 |
+| `limit` | integer | 否 | 每页数量。未传或为空时返回全部匹配产品；传入时最大 `500`。 |
 
 ## 请求示例
 
 ```json
 {
-  "apikey": "ak_xxxxxxxxxxxxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  "domain_type": "single",
-  "brand_code": "cnssl",
-  "verification_type": "dv",
-  "page": 1,
-  "limit": 100
+  "apikey": "ak_xxxxxxxxxxxxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 }
 ```
 
@@ -42,32 +37,11 @@
 | --- | --- | --- |
 | `code` | integer | 业务状态码，`200` 表示成功。 |
 | `message` | string | 响应消息。 |
-| `data.user` | object | 当前 API 密钥对应的用户信息。 |
-| `data.query` | object | 本次查询条件。 |
-| `data.products.total` | integer | 符合条件的产品总数。 |
-| `data.products.page` | integer | 当前页码。 |
-| `data.products.limit` | integer | 每页数量。 |
-| `data.products.total_pages` | integer | 总页数。 |
-| `data.products.items` | array | 产品列表。 |
-
-### 用户信息字段
-
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| `id` | integer | 用户自增 ID。 |
-| `user_id` | string | 用户业务 ID。 |
-| `username` | string | 用户名。 |
-| `status` | integer | 用户状态：`0` 已封禁，`1` 正常，`2` 等待邮箱核验，`3` 等待手机核验。 |
-| `status_text` | string | 用户状态说明。 |
-| `user_type` | string | 用户类型。 |
-| `partner_level` | integer | 合作商等级。 |
-| `balance` | number | 用户账户余额。 |
-| `credit_line` | number | 受信额度。 |
-| `credit_used` | number | 已使用受信额度。 |
-| `credit_available` | number | 可用受信额度。 |
-| `trusted_balance` | number | 受信余额，同 `credit_available`。 |
-| `bound_phone` | string/null | 用户绑定手机号。 |
-| `bound_email` | string/null | 用户绑定邮箱。 |
+| `data.total` | integer | 符合条件的产品总数。 |
+| `data.page` | integer | 当前页码。 |
+| `data.limit` | integer | 本次返回数量限制。未传 `limit` 时等于全部匹配产品数量。 |
+| `data.total_pages` | integer | 总页数。 |
+| `data.items` | array | 产品列表。 |
 
 ### 产品字段
 
@@ -125,54 +99,39 @@
   "code": 200,
   "message": "ok",
   "data": {
-    "user": {
-      "id": 1,
-      "user_id": "1",
-      "username": "partner",
-      "status": 1,
-      "status_text": "正常",
-      "partner_level": 1,
-      "balance": 1000,
-      "credit_available": 500,
-      "trusted_balance": 500,
-      "bound_phone": "18600000000",
-      "bound_email": "partner@example.com"
-    },
-    "products": {
-      "total": 1,
-      "page": 1,
-      "limit": 100,
-      "total_pages": 1,
-      "items": [
-        {
-          "product_name": "CNSSL DV SSL",
-          "product_code": "cnssl-dv",
-          "product_type": "SSL 证书",
-          "product_type_code": "ssl",
-          "verification_type": "域名验证",
-          "verification_type_code": "dv",
-          "brand": "CNSSL",
-          "brand_code": "cnssl",
-          "signature_algorithms": [
-            {
-              "name": "RSA",
-              "code": "rsa",
-              "encryption_strengths": [
-                { "name": "RSA-2048", "code": "rsa-2048" }
-              ]
-            }
-          ],
-          "hash_algorithms": [
-            { "name": "SHA-256", "code": "sha256" }
-          ],
-          "valid_years": [
-            { "years": 1, "months": 12, "price": 98, "price_source": "user" }
-          ],
-          "max_single_domains": 1,
-          "max_wildcards": 0
-        }
-      ]
-    }
+    "total": 1,
+    "page": 1,
+    "limit": 1,
+    "total_pages": 1,
+    "items": [
+      {
+        "product_name": "CNSSL DV SSL",
+        "product_code": "cnssl-dv",
+        "product_type": "SSL 证书",
+        "product_type_code": "ssl",
+        "verification_type": "域名验证",
+        "verification_type_code": "dv",
+        "brand": "CNSSL",
+        "brand_code": "cnssl",
+        "signature_algorithms": [
+          {
+            "name": "RSA",
+            "code": "rsa",
+            "encryption_strengths": [
+              { "name": "RSA-2048", "code": "rsa-2048" }
+            ]
+          }
+        ],
+        "hash_algorithms": [
+          { "name": "SHA-256", "code": "sha256" }
+        ],
+        "valid_years": [
+          { "years": 1, "months": 12, "price": 98, "price_source": "user" }
+        ],
+        "max_single_domains": 1,
+        "max_wildcards": 0
+      }
+    ]
   }
 }
 ```
