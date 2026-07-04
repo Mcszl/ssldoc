@@ -86,18 +86,7 @@ export default defineConfig({
 
     search: {
       provider: 'local'
-    },
-
-    sidebar: [
-      {
-        text: '合作商接口',
-        collapsed: false,
-        items: [
-          { text: '获取账号信息接口', link: '/partner/get-user-data' },
-          { text: '获取产品信息接口', link: '/partner/get-user-product' }
-        ]
-      }
-    ]
+    }
   },
 
   locales: {

@@ -6,9 +6,7 @@ export default defineAdditionalConfig({
   themeConfig: {
     nav: nav(),
 
-    sidebar: {
-      '/guide/': { base: '/guide/', items: sidebarGuide() }
-    },
+    sidebar: sidebar(),
 
     footer: {
       message: 'EveryoneTrust SSL 文档中心，帮助你稳定完成 HTTPS 运维。',
@@ -61,6 +59,11 @@ function nav(): DefaultTheme.NavItem[] {
       link: '/guide/deployment'
     },
     {
+      text: '合作商接口',
+      link: '/partner/get-user-data',
+      activeMatch: '/partner/'
+    },
+    {
       text: '控制台',
       link: 'https://shop.ywxmz.com/console/'
     },
@@ -84,16 +87,24 @@ function nav(): DefaultTheme.NavItem[] {
   ]
 }
 
-function sidebarGuide(): DefaultTheme.SidebarItem[] {
+function sidebar(): DefaultTheme.SidebarItem[] {
   return [
     {
       text: 'EveryoneTrust SSL',
       collapsed: false,
       items: [
-        { text: '快速开始', link: 'getting-started' },
-        { text: '域名验证', link: 'domain-validation' },
-        { text: '证书部署', link: 'deployment' },
-        { text: '自动化管理', link: 'automation' }
+        { text: '快速开始', link: '/guide/getting-started' },
+        { text: '域名验证', link: '/guide/domain-validation' },
+        { text: '证书部署', link: '/guide/deployment' },
+        { text: '自动化管理', link: '/guide/automation' }
+      ]
+    },
+    {
+      text: '合作商接口',
+      collapsed: false,
+      items: [
+        { text: '获取账号信息接口', link: '/partner/get-user-data' },
+        { text: '获取产品信息接口', link: '/partner/get-user-product' }
       ]
     }
   ]
