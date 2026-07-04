@@ -60,11 +60,7 @@
 | `signature_algorithms` | array | 支持的签名算法及对应加密强度。 |
 | `hash_algorithms` | array | 支持的哈希算法。 |
 | `valid_years` | array | 可选年限及对应价格。 |
-| `price_source` | string | 基础价格来源：`user` 用户专属价，`partner` 合作商等级价，`default` 系统默认价。 |
-| `has_custom_price` | boolean | 是否使用了用户专属价或合作商等级价。 |
 | `base_price` | number | 当前用户的一年期基础价格。 |
-| `original_price` | number | 系统默认当前售价。 |
-| `retail_price` | number | 系统零售原价。 |
 | `san_price` | number | 额外单域名单价。 |
 | `wildcard_price` | number | 额外通配符单价。 |
 | `max_single_domains` | integer | 最大单域名数量。 |
@@ -88,7 +84,6 @@
 | `years` | number | 年限。 |
 | `months` | integer | 月数。 |
 | `price` | number | 对应价格。用户有专属时长价格时返回专属价格。 |
-| `price_source` | string | 该年限价格来源：`user`、`partner`、`default`。 |
 | `san_price` | number | 该年限对应的额外单域名单价。 |
 | `wildcard_price` | number | 该年限对应的额外通配符单价。 |
 
@@ -126,7 +121,7 @@
           { "name": "SHA-256", "code": "sha256" }
         ],
         "valid_years": [
-          { "years": 1, "months": 12, "price": 98, "price_source": "user" }
+          { "years": 1, "months": 12, "price": 98 }
         ],
         "max_single_domains": 1,
         "max_wildcards": 0
