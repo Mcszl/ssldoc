@@ -33,24 +33,25 @@
 | `wildcard_domains` | array | 多通配符 / 多域名混合产品需要额外通配符时 | 附加通配符域名列表。也兼容 `wc_domains`。 |
 | `custom_csr` | string | 使用自定义 CSR 时 | PEM 格式 CSR。传入后接口会校验 CN、SAN、组织信息和算法。 |
 
-## 可选参数
+## 直接传企业信息
 
-| 参数 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `months` | integer | `12` | 购买时长，单位月。优先级高于 `years`。 |
-| `years` | integer | `1` | 购买年限。未传 `months` 时使用。 |
-| `signature_algorithm` | string | `rsa` | 签名算法，如 `rsa`、`ecc`、`sm2`。也兼容 `sig_algos` 数组。 |
-| `key_spec` | string | 根据签名算法自动选择 | 密钥规格，如 `rsa-2048`、`p-256`。也兼容 `key_specs` 数组。 |
-| `hash_algorithm` | string | `sha256` | 哈希算法，如 `sha256`、`sha384`。也兼容 `hash_algos` 数组。 |
-| `verification_method` | string | 产品允许范围内默认方式 | 域名验证方式，如 `dns`、`file`、`email-admin`。也兼容 `verif_methods` 数组。 |
-| `payment_method` | string | `balance` | 支付方式：`balance` 余额支付，`credit` 受信额度支付。不能混合支付。 |
-| `coupon_type` | string | 无 | 优惠类型：`coupon` 或 `code`。 |
-| `coupon_id` | integer | 无 | 优惠券 ID。 |
-| `coupon_code` | string | 无 | 优惠码。 |
+OV / EV 产品必须提供企业信息。如果不使用 `company_id`，请在请求体中传入 `company_info` 对象。`company_info` 不会写入企业信息库，只会随本次订单保存并用于后续证书签发。
 
-## 企业信息对象
+最小必填示例：
 
-`company_info` 用于 OV / EV 产品直接提交企业资料。接口也兼容 `company` 对象或同名顶层字段，但推荐使用 `company_info`。
+```json
+{
+  "company_info": {
+    "company_name": "Example Technology Co., Ltd.",
+    "country_code": "CN",
+    "contact_first": "San",
+    "contact_last": "Zhang",
+    "email": "admin@example.com"
+  }
+}
+```
+
+`company_info` 也兼容使用 `company` 对象或同名顶层字段传入，但推荐统一使用 `company_info`。
 
 | 参数 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- |
@@ -68,6 +69,21 @@
 | `phone` | string | 否 | 公司或联系人电话。 |
 | `contact_title` | string | 否 | 联系人职位。 |
 | `id_number` | string | 否 | 联系人证件编号。 |
+
+## 可选参数
+
+| 参数 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `months` | integer | `12` | 购买时长，单位月。优先级高于 `years`。 |
+| `years` | integer | `1` | 购买年限。未传 `months` 时使用。 |
+| `signature_algorithm` | string | `rsa` | 签名算法，如 `rsa`、`ecc`、`sm2`。也兼容 `sig_algos` 数组。 |
+| `key_spec` | string | 根据签名算法自动选择 | 密钥规格，如 `rsa-2048`、`p-256`。也兼容 `key_specs` 数组。 |
+| `hash_algorithm` | string | `sha256` | 哈希算法，如 `sha256`、`sha384`。也兼容 `hash_algos` 数组。 |
+| `verification_method` | string | 产品允许范围内默认方式 | 域名验证方式，如 `dns`、`file`、`email-admin`。也兼容 `verif_methods` 数组。 |
+| `payment_method` | string | `balance` | 支付方式：`balance` 余额支付，`credit` 受信额度支付。不能混合支付。 |
+| `coupon_type` | string | 无 | 优惠类型：`coupon` 或 `code`。 |
+| `coupon_id` | integer | 无 | 优惠券 ID。 |
+| `coupon_code` | string | 无 | 优惠码。 |
 
 ## 域名类型规则
 
