@@ -27,7 +27,8 @@
 
 | 参数 | 类型 | 必填场景 | 说明 |
 | --- | --- | --- | --- |
-| `company_id` | integer | OV / EV 产品 | 企业信息 ID。OV / EV 证书下单时必须传入。 |
+| `company_id` | integer | OV / EV 产品，与 `company_info` 二选一 | 已保存的企业信息 ID。传入时优先使用该企业信息。 |
+| `company_info` | object | OV / EV 产品，与 `company_id` 二选一 | 直接传入企业信息，不会写入企业信息库，会随证书订单保存。 |
 | `san_domains` | array | 多域名单域名 / 多域名混合产品需要额外单域名时 | 附加单域名列表。 |
 | `wildcard_domains` | array | 多通配符 / 多域名混合产品需要额外通配符时 | 附加通配符域名列表。也兼容 `wc_domains`。 |
 | `custom_csr` | string | 使用自定义 CSR 时 | PEM 格式 CSR。传入后接口会校验 CN、SAN、组织信息和算法。 |
@@ -46,6 +47,27 @@
 | `coupon_type` | string | 无 | 优惠类型：`coupon` 或 `code`。 |
 | `coupon_id` | integer | 无 | 优惠券 ID。 |
 | `coupon_code` | string | 无 | 优惠码。 |
+
+## 企业信息对象
+
+`company_info` 用于 OV / EV 产品直接提交企业资料。接口也兼容 `company` 对象或同名顶层字段，但推荐使用 `company_info`。
+
+| 参数 | 类型 | 必填 | 说明 |
+| --- | --- | --- | --- |
+| `company_name` | string | 是 | 公司全称。使用自定义 CSR 时，CSR 中的组织名称需与该值一致。 |
+| `country_code` | string | 是 | 国家/地区两位代码，如 `CN`、`US`、`GB`。 |
+| `contact_first` | string | 是 | 联系人姓。 |
+| `contact_last` | string | 是 | 联系人名。 |
+| `email` | string | 是 | 联系人邮箱。 |
+| `registration_no` | string | 否 | 公司注册号或营业执照编号。也兼容 `registration_number`。 |
+| `country_name` | string | 否 | 国家/地区名称。 |
+| `province_pinyin` | string | 否 | 省/州拼音或英文名称。也兼容 `province`。 |
+| `city_pinyin` | string | 否 | 城市拼音或英文名称。也兼容 `city`。 |
+| `address` | string | 否 | 公司详细地址。 |
+| `postal_code` | string | 否 | 邮政编码。 |
+| `phone` | string | 否 | 公司或联系人电话。 |
+| `contact_title` | string | 否 | 联系人职位。 |
+| `id_number` | string | 否 | 联系人证件编号。 |
 
 ## 域名类型规则
 
@@ -90,12 +112,41 @@
 
 ### OV / EV 证书
 
+使用已保存的企业信息：
+
 ```json
 {
   "apikey": "ak_xxxxxxxxxxxxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
   "product_code": "example-ov-single",
   "domain": "example.com",
   "company_id": 12,
+  "months": 12,
+  "verification_method": "dns",
+  "payment_method": "balance"
+}
+```
+
+直接传入企业信息：
+
+```json
+{
+  "apikey": "ak_xxxxxxxxxxxxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "product_code": "example-ov-single",
+  "domain": "example.com",
+  "company_info": {
+    "company_name": "Example Technology Co., Ltd.",
+    "registration_no": "91310000XXXXXXXXXX",
+    "country_code": "CN",
+    "province_pinyin": "Shanghai",
+    "city_pinyin": "Shanghai",
+    "address": "No. 1 Example Road",
+    "postal_code": "200000",
+    "phone": "+86.21.12345678",
+    "contact_first": "San",
+    "contact_last": "Zhang",
+    "contact_title": "IT Manager",
+    "email": "admin@example.com"
+  },
   "months": 12,
   "verification_method": "dns",
   "payment_method": "balance"
