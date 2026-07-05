@@ -10,7 +10,7 @@
 
 | 项目 | 说明 |
 | --- | --- |
-| 请求地址 | `/partner/CreateOrder/index.php` |
+| 请求地址 | `/partner/CreateOrder/` |
 | 请求方式 | `POST` |
 | Content-Type | `application/json` 或 `application/x-www-form-urlencoded` |
 

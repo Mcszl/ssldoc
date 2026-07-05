@@ -6,7 +6,7 @@
 
 | 项目 | 说明 |
 | --- | --- |
-| 请求地址 | `/partner/GetUserProduct/index.php` |
+| 请求地址 | `/partner/GetUserProduct/` |
 | 请求方式 | `POST` |
 | Content-Type | `application/json` 或 `application/x-www-form-urlencoded` |
 
