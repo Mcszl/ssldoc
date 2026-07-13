@@ -19,8 +19,6 @@
 | 参数 | 类型 | 必填 | 说明 |
 | --- | --- | --- | --- |
 | `apikey` | string | 是 | API 密钥。推荐传 `app_id:api_secret`，也支持通过 `X-API-Key` 或 `Authorization: Bearer {apikey}` 传入。 |
-| `app_id` | string | 与 `api_secret` 配套 | API Key 的 AppID。使用 `apikey` 或请求头鉴权时可不传。 |
-| `api_secret` | string | 与 `app_id` 配套 | API Key Secret。使用 `apikey` 或请求头鉴权时可不传。 |
 | `order_no` | string | 是 | 创建订单接口返回的订单号。也兼容 `order_number`。 |
 
 ## 请求示例
