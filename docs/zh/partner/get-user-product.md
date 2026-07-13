@@ -59,6 +59,7 @@
 | `brand_code` | string | 品牌代码。 |
 | `signature_algorithms` | array | 支持的签名算法及对应加密强度。 |
 | `hash_algorithms` | array | 支持的哈希算法。 |
+| `verification_methods` | array | 产品支持的证书验证方式。未配置限制时返回系统全部启用验证方式。 |
 | `valid_years` | array | 可选年限及对应价格。 |
 | `base_price` | number | 当前用户的一年期基础价格。 |
 | `san_price` | number | 额外单域名单价。 |
@@ -86,6 +87,16 @@
 | `price` | number | 对应价格。用户有专属时长价格时返回专属价格。 |
 | `san_price` | number | 该年限对应的额外单域名单价。 |
 | `wildcard_price` | number | 该年限对应的额外通配符单价。 |
+
+### 验证方式字段
+
+| 参数 | 类型 | 说明 |
+| --- | --- | --- |
+| `id` | integer/null | 验证方式 ID。 |
+| `name` | string | 验证方式名称。 |
+| `code` | string | 验证方式代码，如 `dns`、`file`、`email-admin`、`dcv`。 |
+| `type` | string/null | 验证方式类型：`dns`、`file`、`email`、`dcv`。 |
+| `description` | string/null | 验证方式说明。 |
 
 ## 响应示例
 
@@ -119,6 +130,15 @@
         ],
         "hash_algorithms": [
           { "name": "SHA-256", "code": "sha256" }
+        ],
+        "verification_methods": [
+          {
+            "id": 1,
+            "name": "DNS 验证",
+            "code": "dns",
+            "type": "dns",
+            "description": "通过在域名 DNS 添加 TXT 记录完成域名所有权验证"
+          }
         ],
         "valid_years": [
           { "years": 1, "months": 12, "price": 98 }

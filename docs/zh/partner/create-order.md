@@ -176,7 +176,6 @@ OV / EV 产品必须提供企业信息。如果不使用 `company_id`，请在�
 | `code` | integer | 业务状态码，`200` 表示成功。 |
 | `message` | string | 响应消息。 |
 | `data.order_no` | string | 订单号。 |
-| `data.order_id` | integer | 订单 ID。 |
 | `data.total_amount` | number | 订单原始应付金额。 |
 | `data.discount_amount` | number | 优惠金额。 |
 | `data.payable_amount` | number | 实际扣款金额。 |
@@ -201,7 +200,6 @@ OV / EV 产品必须提供企业信息。如果不使用 `company_id`，请在�
   "message": "订单创建成功",
   "data": {
     "order_no": "CERT202607041730001234",
-    "order_id": 1001,
     "total_amount": 98,
     "discount_amount": 0,
     "payable_amount": 98,

@@ -105,7 +105,8 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       items: [
         { text: '获取账号信息接口', link: '/partner/get-user-data' },
         { text: '获取产品信息接口', link: '/partner/get-user-product' },
-        { text: '创建订单接口', link: '/partner/create-order' }
+        { text: '创建订单接口', link: '/partner/create-order' },
+        { text: '提交证书申请接口', link: '/partner/apply-sign' }
       ]
     }
   ]
