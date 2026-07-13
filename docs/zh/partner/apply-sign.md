@@ -1,9 +1,9 @@
 # 提交证书申请接口
 
-合作商创建订单并完成扣款后，可通过本接口按订单号提交证书签发申请。接口会复用后台签发引擎，完成订单归属校验、证书状态校验、CSR 校验、上游 CA 申请提交，并返回域名验证记录。
+合作商创建订单并完成扣款后，可通过本接口按订单号提交证书签发申请。接口会复用后台签发引擎，完成订单归属校验、证书状态校验、订单内 CSR 校验、上游 CA 申请提交，并返回域名验证记录。
 
 ::: tip 说明
-本接口中的“密钥”指合作商 API 密钥，不是 SSL 证书私钥。证书私钥由合作商自行生成并保管时，请传入对应 CSR。
+本接口中的“密钥”指合作商 API 密钥，不是 SSL 证书私钥。签发阶段不再接收 CSR；如需使用自定义 CSR，请在创建订单接口中提交。
 :::
 
 ## 请求信息
@@ -22,8 +22,6 @@
 | `app_id` | string | 与 `api_secret` 配套 | API Key 的 AppID。使用 `apikey` 或请求头鉴权时可不传。 |
 | `api_secret` | string | 与 `app_id` 配套 | API Key Secret。使用 `apikey` 或请求头鉴权时可不传。 |
 | `order_no` | string | 是 | 创建订单接口返回的订单号。也兼容 `order_number`。 |
-| `custom_csr` | string | 否 | PEM 格式 CSR。创建订单时未提交 CSR，可在本接口提交；若订单已保存 CSR，可不传。 |
-| `csr` | string | 否 | `custom_csr` 的别名。 |
 
 ## 请求示例
 
@@ -32,8 +30,7 @@
 ```json
 {
   "apikey": "ak_xxxxxxxxxxxxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  "order_no": "CERT202607041730001234",
-  "custom_csr": "-----BEGIN CERTIFICATE REQUEST-----\n...\n-----END CERTIFICATE REQUEST-----"
+  "order_no": "CERT202607041730001234"
 }
 ```
 
@@ -130,6 +127,7 @@ curl -X POST "https://example.com/partner/ApplySign/" \
 
 - `order_no` 必须属于当前 API Key 对应的用户，否则返回 `404`。
 - 同一证书仅在“等待签发”或“签发失败”状态下可重新提交申请。
-- 如果请求中传入 `custom_csr`，接口会优先使用请求中的 CSR；未传时使用订单证书记录中已保存的 CSR。
-- CSR 会由签发引擎校验证书域名、SAN、通配符和 OV / EV 组织信息是否匹配订单。
+- 本接口不接收 `custom_csr` 或 `csr` 参数。若请求中传入非空 CSR 参数，将返回 `400`。
+- 如需使用自定义 CSR，请在创建订单接口中通过 `custom_csr` 提交；签发时会使用订单证书记录中已保存的 CSR。
+- 订单中已保存的 CSR 会由签发引擎校验证书域名、SAN、通配符和 OV / EV 组织信息是否匹配订单。
 - 提交成功后请根据 `dns_records`、`http_records` 或 `email_records` 完成域名验证。
