@@ -103,6 +103,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       text: '合作商接口',
       collapsed: false,
       items: [
+        { text: '在 APIFox 中打开', link: 'https://doc.ssl.api.everyonetrust.com' },
         { text: '获取账号信息接口', link: '/partner/get-user-data' },
         { text: '获取产品信息接口', link: '/partner/get-user-product' },
         { text: '创建订单接口', link: '/partner/create-order' },
