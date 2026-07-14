@@ -1,12 +1,11 @@
 import fs from 'fs-extra'
 import matter from 'gray-matter'
 import path from 'node:path'
-import {
-  SitemapStream,
-  type EnumChangefreq,
-  type Img,
-  type LinkItem,
-  type NewsItem
+import type {
+  EnumChangefreq,
+  Img,
+  LinkItem,
+  NewsItem
 } from 'sitemap'
 import type { SiteConfig } from '../config'
 import { slash } from '../shared'
@@ -74,14 +73,77 @@ export async function generateSitemap(siteConfig: SiteConfig) {
     let items: SitemapItem[] = _items.flat()
     items = (await siteConfig.sitemap?.transformItems?.(items)) || items
 
-    const sitemapStream = new SitemapStream(siteConfig.sitemap)
     const sitemapPath = path.join(siteConfig.outDir, 'sitemap.xml')
-    const writeStream = fs.createWriteStream(sitemapPath)
-
-    sitemapStream.pipe(writeStream)
-    items.forEach((item) => sitemapStream.write(item))
-    sitemapStream.end()
+    await fs.outputFile(sitemapPath, renderSitemapXml(items, siteConfig.sitemap.hostname))
   })
+}
+
+function renderSitemapXml(items: SitemapItem[], hostname: string): string {
+  const hasAlternates = items.some((item) => item.links?.length)
+  const namespace = hasAlternates
+    ? ' xmlns:xhtml="http://www.w3.org/1999/xhtml"'
+    : ''
+  const urls = items.map((item) => renderSitemapUrl(item, hostname)).join('\n')
+
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"${namespace}>`,
+    urls,
+    '</urlset>',
+    ''
+  ].join('\n')
+}
+
+function renderSitemapUrl(item: SitemapItem, hostname: string): string {
+  const lines = [
+    '  <url>',
+    `    <loc>${escapeXml(toAbsoluteUrl(item.url, hostname))}</loc>`
+  ]
+
+  const lastmod = formatLastmod(item.lastmodISO || item.lastmod)
+  if (lastmod) lines.push(`    <lastmod>${escapeXml(lastmod)}</lastmod>`)
+  if (item.changefreq) lines.push(`    <changefreq>${escapeXml(item.changefreq)}</changefreq>`)
+  if (item.priority !== undefined) {
+    lines.push(`    <priority>${formatPriority(item.priority)}</priority>`)
+  }
+
+  for (const link of item.links || []) {
+    if (!link.url || !link.lang) continue
+    lines.push(
+      `    <xhtml:link rel="alternate" hreflang="${escapeXml(link.lang)}" href="${escapeXml(toAbsoluteUrl(link.url, hostname))}" />`
+    )
+  }
+
+  lines.push('  </url>')
+  return lines.join('\n')
+}
+
+function toAbsoluteUrl(url: string, hostname: string): string {
+  if (/^[a-z][a-z\d+.-]*:/i.test(url)) return url
+
+  const base = hostname.endsWith('/') ? hostname : `${hostname}/`
+  const pathname = url === '/' ? '' : url.replace(/^\/+/, '')
+  return new URL(pathname, base).href
+}
+
+function formatLastmod(lastmod?: string | number | Date): string | undefined {
+  if (lastmod === undefined || lastmod === null || lastmod === '') return undefined
+
+  const date = lastmod instanceof Date ? lastmod : new Date(lastmod)
+  return Number.isNaN(+date) ? undefined : date.toISOString()
+}
+
+function formatPriority(priority: number): string {
+  return Math.min(1, Math.max(0, priority)).toFixed(1)
+}
+
+function escapeXml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;')
 }
 
 // ============================== Patched Types ===============================

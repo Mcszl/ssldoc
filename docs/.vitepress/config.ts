@@ -10,7 +10,7 @@ import {
 import llmstxt from 'vitepress-plugin-llms'
 
 const prod = !!process.env.NETLIFY
-const siteUrl = 'https://shop.ywxmz.com'
+const siteUrl = 'https://doc.everyonetrust.com'
 const logoUrl = 'https://cos-ssldoc.ywxmz.com/spaceFiles/1/nS3DUXtiobRsMPxGnTNDzt.png'
 
 const ogImage = logoUrl
