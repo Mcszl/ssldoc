@@ -13,7 +13,8 @@ import { getGitTimestamp } from '../utils/getGitTimestamp'
 import { task } from '../utils/task'
 
 export async function generateSitemap(siteConfig: SiteConfig) {
-  if (!siteConfig.sitemap?.hostname) return
+  const sitemap = siteConfig.sitemap
+  if (!sitemap?.hostname) return
 
   const getLastmod = async (url: string) => {
     if (!siteConfig.lastUpdated) return undefined
@@ -71,10 +72,10 @@ export async function generateSitemap(siteConfig: SiteConfig) {
     )
 
     let items: SitemapItem[] = _items.flat()
-    items = (await siteConfig.sitemap?.transformItems?.(items)) || items
+    items = (await sitemap.transformItems?.(items)) || items
 
     const sitemapPath = path.join(siteConfig.outDir, 'sitemap.xml')
-    await fs.outputFile(sitemapPath, renderSitemapXml(items, siteConfig.sitemap.hostname))
+    await fs.outputFile(sitemapPath, renderSitemapXml(items, sitemap.hostname))
   })
 }
 
