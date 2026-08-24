@@ -53,11 +53,6 @@ curl -X POST "https://example.com/partner/CancelOrder/" \
 | `data.refund_order_no` | string | 自动退款成功时生成的退款流水号。转人工审核时不返回。 |
 | `data.refund_mode` | string | `direct` 表示已自动退款，`audit` 表示已转管理员审核。 |
 | `data.refund_status` | integer | 退款状态：`0` 待审核，`3` 已通过。 |
-| `data.upstream_cancel.success` | boolean | 上游取消是否成功。 |
-| `data.upstream_cancel.provider` | string | 上游渠道。 |
-| `data.upstream_cancel.message` | string | 上游取消结果说明。 |
-| `data.upstream_cancel.upstream_code` | string | 上游返回的状态码。 |
-| `data.upstream_cancel.skipped` | boolean | 是否因未提交上游而跳过上游取消。 |
 
 ## 响应示例
 
@@ -74,14 +69,7 @@ curl -X POST "https://example.com/partner/CancelOrder/" \
     "refund_to": "balance",
     "refund_order_no": "REFUND202607131930001234",
     "refund_mode": "direct",
-    "refund_status": 3,
-    "upstream_cancel": {
-      "success": true,
-      "provider": "CNSSL",
-      "message": "取消订单成功",
-      "upstream_code": "1",
-      "skipped": false
-    }
+    "refund_status": 3
   }
 }
 ```
@@ -98,14 +86,7 @@ curl -X POST "https://example.com/partner/CancelOrder/" \
     "refund_amount": 98,
     "refund_to": "balance",
     "refund_mode": "audit",
-    "refund_status": 0,
-    "upstream_cancel": {
-      "success": false,
-      "provider": "FreeGetSSL",
-      "message": "取消订单失败",
-      "upstream_code": "400",
-      "skipped": false
-    }
+    "refund_status": 0
   }
 }
 ```
@@ -120,14 +101,6 @@ curl -X POST "https://example.com/partner/CancelOrder/" \
 - 订单尚未提交到上游且证书仍为等待签发状态时，会跳过上游取消并直接执行本地退款。
 - 上游取消失败时，本地不会自动入账退款，只会创建待审核退款申请。
 
-## 上游取消规则
-
-系统会根据订单对应产品的渠道配置自动调用上游取消接口：
-
-| 渠道 | 上游接口 | 成功判断 |
-| --- | --- | --- |
-| CNSSL | `POST {api_url}/cancel`，JSON 参数 `order_id`，Bearer 鉴权。 | 返回 `code = 1`。 |
-| FreeGetSSL | `POST {api_url}/Home/Order/cancelOrder`，multipart 参数 `token`、`order_id`。 | 返回 `status = true`。 |
 
 ## 错误码
 
