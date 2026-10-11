@@ -57,6 +57,7 @@
 | `domain_type_code` | string | 域名类型代码。 |
 | `brand` | string | 品牌名称。 |
 | `brand_code` | string | 品牌代码。 |
+| `supports_reissue` | boolean | 产品是否支持重新签发。只有为 `true` 时才能调用重签接口。 |
 | `signature_algorithms` | array | 支持的签名算法及对应加密强度。 |
 | `hash_algorithms` | array | 支持的哈希算法。 |
 | `verification_methods` | array | 产品支持的证书验证方式。未配置限制时返回系统全部启用验证方式。 |
@@ -119,6 +120,7 @@
         "verification_type_code": "dv",
         "brand": "CNSSL",
         "brand_code": "cnssl",
+        "supports_reissue": true,
         "signature_algorithms": [
           {
             "name": "RSA",

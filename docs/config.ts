@@ -109,6 +109,7 @@ function sidebar(): DefaultTheme.SidebarItem[] {
         { text: '创建订单接口', link: '/partner/create-order' },
         { text: '取消订单接口', link: '/partner/cancel-order' },
         { text: '提交证书申请接口', link: '/partner/apply-sign' },
+        { text: '重新签发证书接口', link: '/partner/reissue-certificate' },
         { text: '获取订单状态接口', link: '/partner/get-certificate-status' },
         { text: '下载证书接口', link: '/partner/download-certificate' },
         { text: '重新获取验证信息接口', link: '/partner/get-record' },

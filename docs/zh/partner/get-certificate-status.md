@@ -16,6 +16,7 @@
 | --- | --- | --- | --- |
 | `apikey` | string | 是 | API 密钥。推荐传 `app_id:api_secret`，也支持通过 `X-API-Key` 或 `Authorization: Bearer {apikey}` 传入。 |
 | `order_no` | string | 是 | 创建订单接口返回的订单号。也兼容 `order_number`。 |
+| `cert_id` | string | 否 | 指定证书 ID，也兼容 `certificate_id`。重签后应传重签接口返回的新 `cert_id`。 |
 
 ## 频率限制
 
@@ -26,7 +27,8 @@
 ```json
 {
   "apikey": "ak_xxxxxxxxxxxxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
-  "order_no": "CERT202607041730001234"
+  "order_no": "CERT202607041730001234",
+  "cert_id": "5b2e0a81-2e64-4e81-9f5a-2e0a812e6444"
 }
 ```
 
@@ -37,7 +39,8 @@ curl -X POST "https://example.com/partner/GetCertificateStatus/" \
   -H "Content-Type: application/json" \
   -H "X-API-Key: ak_xxxxxxxxxxxxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
   -d '{
-    "order_no": "CERT202607041730001234"
+    "order_no": "CERT202607041730001234",
+    "cert_id": "5b2e0a81-2e64-4e81-9f5a-2e0a812e6444"
   }'
 ```
 
