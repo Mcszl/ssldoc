@@ -138,8 +138,6 @@ curl -X POST "https://example.com/partner/ReissueCertificate/" \
 ## 注意事项
 
 - 只有签发成功状态的证书可以重签，且对应产品的 `supports_reissue` 必须为 `true`。
-- YSSSL 重签固定沿用原订单的 CSR、私钥、域名、验证方式和联系人信息。即使传入其他 `csr_mode`，系统也会按 `original` 处理。
-- YSSSL 提交重签后，系统会调用订单详情接口获取异步任务进度和 DCV 信息。
 - 同一源证书存在待处理重签记录时不能重复提交。
 - 源证书在替换证书签发完成前仍保持可用；替换证书签发并保存成功后才会停用源证书。
 - 上游产品是否真正支持重签仍由对应 CA 决定。
