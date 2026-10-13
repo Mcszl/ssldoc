@@ -11,9 +11,8 @@ import llmstxt from 'vitepress-plugin-llms'
 
 const prod = !!process.env.NETLIFY
 const siteUrl = 'https://doc.everyonetrust.com'
-const logoUrl = 'https://cos-ssldoc.ywxmz.com/spaceFiles/1/nS3DUXtiobRsMPxGnTNDzt.png'
-
-const ogImage = logoUrl
+const logoPath = '/1000x100-removebg.png'
+const ogImage = new URL(logoPath, siteUrl).href
 
 const localeToOgLocaleMap: Record<string, string> = {
   root: 'zh_CN',
@@ -22,7 +21,8 @@ const localeToOgLocaleMap: Record<string, string> = {
 
 export default defineConfig({
   title: 'EveryoneTrust SSL 文档',
-  description: 'EveryoneTrust SSL/TLS 证书购买、验证、部署、续期和自动化运维文档。',
+  description:
+    'EveryoneTrust SSL/TLS 证书购买、验证、部署、续期和自动化运维文档。',
 
   rewrites: {
     'zh/:rest*': ':rest*'
@@ -77,12 +77,12 @@ export default defineConfig({
 
   // prettier-ignore
   head: [
-    ['link', { rel: 'icon', type: 'image/png', href: logoUrl }],
+    ['link', { rel: 'icon', type: 'image/png', href: logoPath }],
     ['meta', { name: 'theme-color', content: '#2563eb' }]
   ],
 
   themeConfig: {
-    logo: { src: logoUrl, width: 24, height: 24, alt: 'EveryoneTrust SSL' },
+    logo: { src: logoPath, width: 24, height: 24, alt: 'EveryoneTrust SSL' },
 
     search: {
       provider: 'local'

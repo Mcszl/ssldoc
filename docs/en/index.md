@@ -17,7 +17,7 @@ hero:
       text: Certificate Pricing
       link: https://shop.ywxmz.com/price.html
   image:
-    src: https://cos-ssldoc.ywxmz.com/spaceFiles/1/nS3DUXtiobRsMPxGnTNDzt.png
+    src: /1000x100-removebg.png
     alt: EveryoneTrust SSL
 
 features:
