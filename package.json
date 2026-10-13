@@ -90,7 +90,7 @@
     "release": "node scripts/release.js"
   },
   "simple-git-hooks": {
-    "pre-commit": "pnpm lint-staged"
+    "pre-commit": "corepack pnpm lint-staged"
   },
   "lint-staged": {
     "*": "prettier --experimental-cli --ignore-unknown --write"

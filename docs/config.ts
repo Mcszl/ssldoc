@@ -1,7 +1,8 @@
 import { defineAdditionalConfig, type DefaultTheme } from 'vitepress'
 
 export default defineAdditionalConfig({
-  description: 'EveryoneTrust SSL/TLS 证书购买、验证、部署、续期和自动化运维文档。',
+  description:
+    'EveryoneTrust SSL/TLS 证书购买、验证、部署、续期和自动化运维文档。',
 
   themeConfig: {
     nav: nav(),
@@ -103,17 +104,27 @@ function sidebar(): DefaultTheme.SidebarItem[] {
       text: '合作商接口',
       collapsed: false,
       items: [
-        { text: '在 APIFox 中打开', link: 'https://doc.ssl.api.everyonetrust.com' },
+        {
+          text: '在 APIFox 中打开',
+          link: 'https://doc.ssl.api.everyonetrust.com'
+        },
         { text: '获取账号信息接口', link: '/partner/get-user-data' },
         { text: '获取产品信息接口', link: '/partner/get-user-product' },
         { text: '创建订单接口', link: '/partner/create-order' },
         { text: '取消订单接口', link: '/partner/cancel-order' },
         { text: '提交证书申请接口', link: '/partner/apply-sign' },
+        {
+          text: '上传 OV/EV 验证文件接口',
+          link: '/partner/upload-validation-file'
+        },
         { text: '重新签发证书接口', link: '/partner/reissue-certificate' },
         { text: '获取订单状态接口', link: '/partner/get-certificate-status' },
         { text: '下载证书接口', link: '/partner/download-certificate' },
         { text: '重新获取验证信息接口', link: '/partner/get-record' },
-        { text: '更改验证方式接口', link: '/partner/change-vertification-method' }
+        {
+          text: '更改验证方式接口',
+          link: '/partner/change-vertification-method'
+        }
       ]
     }
   ]
