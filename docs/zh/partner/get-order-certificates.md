@@ -10,7 +10,7 @@
 
 | 项目 | 说明 |
 | --- | --- |
-| 请求地址 | `/partner/GetOrderCertificates/` |
+| 请求地址 | `https://shop.everyonetrust.com/partner/GetOrderCertificates/` |
 | 请求方式 | `POST` |
 | Content-Type | `application/json` 或 `application/x-www-form-urlencoded` |
 
@@ -24,13 +24,17 @@
 ## 请求示例
 
 ```bash
-curl -X POST "https://example.com/partner/GetOrderCertificates/" \
+curl -X POST "https://shop.everyonetrust.com/partner/GetOrderCertificates/" \
   -H "Content-Type: application/json" \
   -H "X-API-Key: ak_xxxxxxxxxxxxxxxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" \
   -d '{
     "order_no": "CERT202607041730001234"
   }'
 ```
+
+::: warning 请求域名
+请直接请求 `shop.everyonetrust.com`。旧域名 `shop.ywxmz.com` 会先重定向到新域名，部分 HTTP 客户端跟随 301/302 时会把 POST 改为 GET 并丢弃请求体，进而收到 `405`。
+:::
 
 ## 响应结构
 
